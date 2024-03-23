@@ -1,2 +1,4 @@
 ﻿  HW1.cpp
-  HW1.vcxproj -> D:\Files\Uni\OOP3\HW1\x64\Debug\HW1.exe
+D:\Files\Uni\OOP3\HW1_git\OOP_HW1\HW1\HW1\HW1.cpp(132): warning C4715: 'HTMLTable::remove': not all control paths return a value
+D:\Files\Uni\OOP3\HW1_git\OOP_HW1\HW1\HW1\HW1.cpp(142): warning C4715: 'HTMLTable::edit': not all control paths return a value
+  HW1.vcxproj -> D:\Files\Uni\OOP3\HW1_git\OOP_HW1\HW1\x64\Debug\HW1.exe

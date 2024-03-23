@@ -176,7 +176,7 @@ bool readTable(const char* fileName, HTMLTable& table) {
 			if (strcmp(tag, "\0") == 0) {
 				continue;
 			}
-			std::cout << tag << std::endl;
+			//std::cout << tag << std::endl;
 			strcat(tag, ">");
 
 			
@@ -275,11 +275,11 @@ void readCharacterReferences(char* data) {
 	}
 }
 
-void saveToFile(const char* fileName, const HTMLTable& table) {
+bool saveToFile(const char* fileName, const HTMLTable& table) {
 	std::ofstream ofs(fileName, std::ios::trunc);
 	if (!ofs.is_open()) {
 		std::cout << "Failed opening file!" << std::endl;
-		return;
+		return false;;
 	}
 	else {
 		ofs << "<table>\n";
@@ -305,32 +305,96 @@ void saveToFile(const char* fileName, const HTMLTable& table) {
 		ofs << "</table>\n";
 
 	}
+	return true;
 }
 
 
 
 int main()
 {
+	HTMLTable table;
+	char command[GlobalConstants::BUFFER_SIZE];
+	std::cout << "Enter file name: ";
+	std::cin >> command;
+	if (!readTable("table.html", table)) {
+		std::cout << "Failed loading file!\n";
+		return -1;
+	}
 	while (true) {
-		char command[GlobalConstants::BUFFER_SIZE];
-		std::cout << "Enter file name: ";
+		
+		std::cout << "Commands: add, remove, edit, print, save, quit\n";
 		std::cin >> command;
+		std::cout << command << std::endl;
+
+		if (strcmp(command, "add") == 0) {
+			int rowNumber = 0;
+			char rowText[GlobalConstants::BUFFER_SIZE];
+			std::cout << "row number: ";
+			std::cin >> rowNumber;
+			std::cin.ignore();
+			std::cout << "row (use '|' as separator between rows): ";
+			std::cin.getline(rowText, GlobalConstants::BUFFER_SIZE, '\n');
+
+			if (!table.add(rowNumber, rowText))
+				return -1;
+
+		}
+		else if (strcmp(command, "remove") == 0) {
+			int rowNumber = 0;
+			std::cout << "row number: ";
+			std::cin >> rowNumber;
+			if (!table.remove(rowNumber))
+				return -1;
+		}
+		else if (strcmp(command, "edit") == 0) {
+			int rowNumber = 0;
+			int collNumber = 0;
+			char field[GlobalConstants::BUFFER_SIZE];
+			std::cout << "row number: ";
+			std::cin >> rowNumber;
+			std::cout << "coll number: ";
+			std::cin >> collNumber;
+			std::cout << "field text: ";
+			std::cin.ignore();
+			std::cin.getline(field, GlobalConstants::BUFFER_SIZE, '\n');
+			if (!table.edit(rowNumber, collNumber, field))
+				return -1;
+
+		}
+		else if (strcmp(command, "print") == 0) {
+			table.print();
+		}
+		else if (strcmp(command, "save") == 0) {
+			char fileName[GlobalConstants::BUFFER_SIZE];
+			std::cout << "File name: ";
+			std::cin >> fileName;
+			if (!saveToFile(fileName, table))
+				return false;
+
+		}
+		else if (strcmp(command, "quit") == 0 || command[0] == 'q') {
+			return 0;
+		}
+		else {
+			std::cout << "Wrong command!\n";
+		}
 
 
 
 	}
-	HTMLTable table;
-	readTable("table.html", table);
-	table.print();
-	table.add(6, "Ivan Petrov|12|1234|un1|un2");
-	table.print();
-	table.add(6, "Petur Ivanov|213|1234");
-	//table.remove(2);
-	//table.print();
-	//table.edit(1, 1, "NAMEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-	//table.print();
-	saveToFile("table2.html", table);
+	return 0;
 
-    return 0;
+	//readTable("table.html", table);
+	//table.print();
+	//table.add(6, "Ivan Petrov|12|1234|un1|un2");
+	//table.print();
+	//table.add(6, "Petur Ivanov|213|1234");
+	////table.remove(2);
+	////table.print();
+	////table.edit(1, 1, "NAMEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+	////table.print();
+	//saveToFile("table2.html", table);
+
+ //   return 0;
  }
 
