@@ -1,0 +1,4 @@
+﻿  HW1-2.cpp
+D:\Files\Uni\OOP3\HW1-2\HW1-2\HW1-2.cpp(170,1): warning C4554: '<<': check operator precedence for possible error; use parentheses to clarify precedence
+D:\Files\Uni\OOP3\HW1-2\HW1-2\HW1-2.cpp(297,23): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+  HW1-2.vcxproj -> D:\Files\Uni\OOP3\HW1-2\x64\Debug\HW1-2.exe
